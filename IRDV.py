@@ -3,39 +3,63 @@ import xlrd
 import urllib
 import imgkit
 import datetime
+import whois
 
+#Written using Python 2.7
 #This program is designed to read an excel document and perform an online request of the domain to verify if it exists and if it does it will screenshot the page.
 #Created by Mitchell Blystone-Pemberton
 
 
 #excel doc variable
-print (" ___ ____    ____                        _         _                _                ")
-print ("|_ _|  _ \  |  _ \  ___  _ __ ___   __ _(_)_ __   | |    ___   ___ | | ___   _ _ __  ")
-print (" | || |_) | | | | |/ _ \| '_ ` _ \ / _` | | '_ \  | |   / _ \ / _ \| |/ / | | | '_ \ ")
-print (" | ||  _ <  | |_| | (_) | | | | | | (_| | | | | | | |__| (_) | (_) |   <| |_| | |_) |")
-print ("|___|_| \_\ |____/ \___/|_| |_| |_|\__,_|_|_| |_| |_____\___/ \___/|_|\_\\__,_| .__/ ")
-print ("                                                                              |_|    ")
-print ("                                                               By: Mitchell Pemberton")
-print ("Please enter the path to the excel doc you wish to use:")
-path2doc = raw_input()
+print ("__        __   _         _ _         _                _                ")
+print ("\ \      / /__| |__  ___(_) |_ ___  | |    ___   ___ | | ___   _ _ __  ")
+print (" \ \ /\ / / _ \ '_ \/ __| | __/ _ \ | |   / _ \ / _ \| |/ / | | | '_ \ ")
+print ("  \ V  V /  __/ |_) \__ \ | ||  __/ | |__| (_) | (_) |   <| |_| | |_) |")
+print ("   \_/\_/ \___|_.__/|___/_|\__\___| |_____\___/ \___/|_|\_ \__,_| .__/ ")
+print ("                                                                |_|    ")
+print ("                                                 By: Mitchell Pemberton")
+print ("-----------------------------------------------------------------------")
+print ("                              Main Menu                                ")
+print ("                   1. Lookup using spreadsheet                         ")
+print ("                   2. Lookup using URL                                 ")
+print ("-----------------------------------------------------------------------")
+user_ans = raw_input("Please pick a number: ")
 
-exceldoc = path2doc
+if user_ans == "1":
+     print ("Please enter the path to the excel doc you wish to use:")
+     path2doc = raw_input()
 
-#Opens the excel doc
-wb = xlrd.open_workbook(exceldoc)
+     exceldoc = path2doc
 
-sheet = wb.sheet_by_index(0)
-#adjust values to read from different rows and columns 
-sheet.cell_value(0, 0)
+     #Opens the excel doc
+     wb = xlrd.open_workbook(exceldoc)
 
-#Performs the loop to scan all the entries in the excel book
-for i in range(sheet.nrows):
+     sheet = wb.sheet_by_index(0)
+     #adjust values to read from different rows and columns
+     sheet.cell_value(0, 0)
+
+     #Performs the loop to scan all the entries in the excel book
+     for i in range(sheet.nrows):
+          try:
+               now = datetime.datetime.now()
+               print("------------------------")
+               print(sheet.cell_value(i, 0)),"HTTP Code:"
+               print urllib.urlopen(sheet.cell_value(i, 0)).getcode()
+               print whois.whois(sheet.cell_value(i, 0))
+               imgkit.from_url(sheet.cell_value(i, 0), str(now) +".jpg")
+          except Exception as e:
+               print e
+
+if user_ans == "2":
+     print ("Please enter the URL you wish to lookup I.E. http://www.example.com:")
+     lookup = raw_input()
      try:
           now = datetime.datetime.now()
-          print(sheet.cell_value(i, 0)),"HTTP Code:"
-          print urllib.urlopen(sheet.cell_value(i, 0)).getcode()
-          imgkit.from_url(sheet.cell_value(i, 0), str(now) +".jpg")
+          print("------------------------")
+          print lookup, "HTTP Code:"
+          print urllib.urlopen(lookup).getcode()
+          print whois.whois(lookup)
+          imgkit.from_url(lookup, str(now) + ".jpg")
           print("------------------------")
      except Exception as e:
           print e
-
