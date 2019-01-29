@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #Modules required
 import xlrd
 import urllib
@@ -26,8 +27,7 @@ print ("-----------------------------------------------------------------------"
 user_ans = raw_input("Please pick a number: ")
 
 if user_ans == "1":
-     print ("Please enter the path to the excel doc you wish to use:")
-     path2doc = raw_input()
+     path2doc = raw_input("Please enter the path to the excel doc you wish to use: ")
 
      exceldoc = path2doc
 
@@ -42,22 +42,21 @@ if user_ans == "1":
      for i in range(sheet.nrows):
           try:
                now = datetime.datetime.now()
-               print("------------------------")
-               print(sheet.cell_value(i, 0)),"HTTP Code:"
-               print urllib.urlopen(sheet.cell_value(i, 0)).getcode()
+               print ("------------------------")
+               print (sheet.cell_value(i, 0)),"HTTP Code:"
+               print urllib.urlopen("http://"+sheet.cell_value(i, 0)).getcode()
                print whois.whois(sheet.cell_value(i, 0))
                imgkit.from_url(sheet.cell_value(i, 0), str(now) +".jpg")
           except Exception as e:
                print e
 
 if user_ans == "2":
-     print ("Please enter the URL you wish to lookup I.E. http://www.example.com:")
-     lookup = raw_input()
+     lookup = raw_input("Please enter the URL you wish to lookup I.E. www.example.com: ")
      try:
           now = datetime.datetime.now()
           print("------------------------")
           print lookup, "HTTP Code:"
-          print urllib.urlopen(lookup).getcode()
+          print urllib.urlopen("http://"+lookup).getcode()
           print whois.whois(lookup)
           imgkit.from_url(lookup, str(now) + ".jpg")
           print("------------------------")
