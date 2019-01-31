@@ -1,0 +1,2 @@
+Before running IRDV.py make sure to run requirements.sh to ensure that all dependencies are installed. 
+Also, please note that python 2.7 is requred for this program. 
