@@ -2,3 +2,8 @@ Before running wslookup.py make sure to run requirements.sh to ensure that all d
 Computer running wslookup.py needs to have access to outbound port 43 since that is the port that the WHOIS protocol uses. 
 Also, please note that python 2.7 is requred for this program. 
 Tested and verified to work on Ubuntu/Debian based Linux Distros IE Kali, Parrot, etc. 
+
+
+How to run:
+
+navigate to the directory that wslookup.py is saved in and from the command line type: ./wslookup.py
